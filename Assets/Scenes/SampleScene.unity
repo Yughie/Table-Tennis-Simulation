@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b2834533b540d458f2f427931b1859, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialPosition: {x: 0.61, y: 0.656, z: 1.453}
+  initialPosition: {x: 0.6, y: 0.656, z: 1.453}
   initialVelocity: {x: -1, y: 1.5, z: -6}
   initialSpin: {x: 0, y: 0, z: 0}
   trajectoryResolution: 1000
@@ -939,9 +939,9 @@ GameObject:
   - component: {fileID: 1151388027986962065}
   - component: {fileID: 2823090748179537883}
   - component: {fileID: 1587545475623287631}
+  - component: {fileID: 354120822}
   - component: {fileID: 354120830}
   - component: {fileID: 354120821}
-  - component: {fileID: 354120822}
   - component: {fileID: 354120826}
   - component: {fileID: 354120832}
   m_Layer: 0
