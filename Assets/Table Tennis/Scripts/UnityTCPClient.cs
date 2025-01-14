@@ -1,7 +1,20 @@
 using System;
+using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
 using UnityEngine;
+
+public class BallData
+{
+    public Vector3 position;
+    public Vector3 velocity;
+
+    public BallData(Vector3 position, Vector3 velocity)
+    {
+        this.position = position;
+        this.velocity = velocity;
+    }
+}
 
 public class UnityTCPClient : MonoBehaviour
 {
@@ -16,35 +29,56 @@ public class UnityTCPClient : MonoBehaviour
             // Connect to the server
             client = new TcpClient("127.0.0.1", 5000); // Replace with server IP and port
             stream = client.GetStream();
-            Debug.Log("Connected to Python server");
+            UnityEngine.Debug.Log("Connected to Python server");
         }
         catch (Exception e)
         {
             UnityEngine.Debug.LogError("Connection error: " + e.Message);
         }
+
+        // Check if the Rigidbody is assigned
+        if (ballRigidbody == null)
+        {
+            UnityEngine.Debug.LogError("Ball Rigidbody is not assigned! Please assign it in the Inspector.");
+        }
     }
+
+   
 
     void Update()
     {
-        if (stream != null && stream.CanWrite)
+        if (stream != null && stream.CanWrite && ballRigidbody != null)
         {
-            // Get the ball's position
-            Vector3 ballPosition = ballRigidbody.position;
+            // Get the ball's position and velocity
+            Vector3 position = ballRigidbody.position;
+            Vector3 velocity = ballRigidbody.linearVelocity;
 
-            // Create a JSON message
-            string message = JsonUtility.ToJson(new { x = ballPosition.x, y = ballPosition.y, z = ballPosition.z });
+            // Create a BallData instance
+            BallData ballData = new BallData(position, velocity);
+
+            // Serialize to JSON
+            string message = JsonUtility.ToJson(ballData);
 
             // Send the message
             byte[] data = Encoding.UTF8.GetBytes(message + "\n");
-            stream.Write(data, 0, data.Length);
-            UnityEngine.Debug.Log("Sent: " + message);
+            try
+            {
+                stream.Write(data, 0, data.Length);
+                UnityEngine.Debug.Log($"Sent ball data: {message}");
+            }
+            catch (Exception e)
+            {
+                UnityEngine.Debug.LogError("Error sending data: " + e.Message);
+            }
         }
     }
+
 
     void OnApplicationQuit()
     {
         // Close the connection
         if (stream != null) stream.Close();
         if (client != null) client.Close();
+        UnityEngine.Debug.Log("Disconnected from server");
     }
 }
