@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
 using UnityEngine;
@@ -21,7 +20,7 @@ public class UnityTCPClient : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError("Connection error: " + e.Message);
+            UnityEngine.Debug.LogError("Connection error: " + e.Message);
         }
     }
 
@@ -38,7 +37,7 @@ public class UnityTCPClient : MonoBehaviour
             // Send the message
             byte[] data = Encoding.UTF8.GetBytes(message + "\n");
             stream.Write(data, 0, data.Length);
-            Debug.Log("Sent: " + message);
+            UnityEngine.Debug.Log("Sent: " + message);
         }
     }
 

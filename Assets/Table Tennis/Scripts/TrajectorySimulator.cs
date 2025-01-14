@@ -40,7 +40,6 @@ public class TrajectorySimulator : MonoBehaviour
 
         // Simulate and draw trajectory
         DrawTrajectory();
-        PrintTrajectoryData();
     }
 
     void DrawTrajectory()
@@ -73,14 +72,5 @@ public class TrajectorySimulator : MonoBehaviour
 
         // Apply trajectory points to LineRenderer
         lineRenderer.SetPositions(trajectoryPoints);
-    }
-    // Print the trajectory data for debugging
-    void PrintTrajectoryData()
-    {
-        UnityEngine.Debug.Log("Trajectory Data:");
-        foreach (var data in trajectoryData)
-        {
-            UnityEngine.Debug.Log($"Position: {data.position}, Velocity: {data.velocity}");
-        }
     }
 }
