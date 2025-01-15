@@ -6,13 +6,17 @@ using UnityEngine;
 
 public class BallData
 {
+    public float time;
     public Vector3 position;
     public Vector3 velocity;
+    
 
-    public BallData(Vector3 position, Vector3 velocity)
+    public BallData(float time, Vector3 position, Vector3 velocity)
     {
+        this.time = time;
         this.position = position;
         this.velocity = velocity;
+        
     }
 }
 
@@ -50,11 +54,13 @@ public class UnityTCPClient : MonoBehaviour
         if (stream != null && stream.CanWrite && ballRigidbody != null)
         {
             // Get the ball's position and velocity
+            float time = Time.time;
             Vector3 position = ballRigidbody.position;
             Vector3 velocity = ballRigidbody.linearVelocity;
+            
 
             // Create a BallData instance
-            BallData ballData = new BallData(position, velocity);
+            BallData ballData = new BallData(time, position, velocity );
 
             // Serialize to JSON
             string message = JsonUtility.ToJson(ballData);
